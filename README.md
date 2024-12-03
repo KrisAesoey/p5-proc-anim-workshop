@@ -41,7 +41,7 @@ til andre ting eller til seg selv!
 
 I denne delen skal vi prøve å gjenskape dette:
 
-<video width="320" height="240" controls>
+<video width="320" height="360" controls>
   <source src="./videos/oppgave1.mov" type="video/mp4">
 </video>
 
@@ -61,6 +61,18 @@ være lengre unna musepekeren enn sirkelen som er tegna.
 - Implementer `constrainMaxDistance` funksjonen.
 - Erstatt oppdateringen av posisjone til dotten med `constrainMaxDistance` funksjonen
 
+For denne oppgaven kan det være lurt å sjekke ut:
+
+- `add(value: P5.Vector)` - Plusser på en annen vektor og gir deg summen.
+- `sub(value: P5.Vector)` - Trekker fra en annen vektor for å finne differansen.
+- `mag()` - Finner den totale lengden (magnituden) av vektoren i alle retninger.
+- `setMag(len: number)`- Skalerer vektoren til en ny magnitude basert på gitt lengde.
+
+I tillegg er det mange metoder som ikke er statiske fra biblioteket, men bygger på en `P5`instans. Dette gjelder hovedsaklig ting som skal være knyttet til en canvas (med andre ord tegnes):
+
+`.createVector()` - Tegner en ny vector på canvaset.
+`.ellipse(x: number, y: number, w: number, h?: number)` - Tegner en sirkel på canvaset.
+
 ## 2: Kinematics
 
 Kinematics er et felt som handler om å studere hvordan ting beveger seg _uten_ å ta til hensyn hvilke naturkrefter som forårsaker det!
@@ -69,21 +81,79 @@ I Procedural Animation så handler det om å definere hvordan og i hvilken rekke
 
 Man deler det ofte inn i to deler, forward kinematics (FK) og Inverse kinematics (IK). Først skal vi fokusere på Forward kinematics, hvor vi prøver å definere hvordan et helt sammensatt objekt følger etter når en del begynner å bevege seg. For eksempel, at vognene henger etter når et lokomotiv kjører.
 
-### Oppgave 2 A
+### Oppgave 2
 
 I denne oppgaven skal vi lage en kjede, hvor flere ledd henger sammen og blir dratt i retning av musa:
 
-<video width="320" height="240" controls>
+<video width="320" height="360" controls>
   <source src="./videos/oppgave2.mov" type="video/mp4">
 </video>
 
-- Finn frem til `SimpleChain` filen i components mappa, og implementer `resolve` og `draw` metodene.
+- Finn frem til `SimpleChain` filen i components mappa, og implementer `resolve` metoden, slik at hver lenke på kjeden er er "constrained" på avstand når posisjon blir oppdatert.
+
+- Implement `draw` metoden også, slik at kjeden tegnes på canvaset.
 
 - Initialiser en `SimpleChain` i sketchen din som beveger seg mot musepekeren.
 
 ## 3: Inverse kinematics
 
-## 4: Drawing shapes
+I forrige del fikk vi intro til Kinematics, og nå skal vi se på det som heter Inverse kinematics. Da ser man på hvordan bevegelsen henger sammen både fra startpunktet og sluttpunktet før man regner ut bevegelsen. For eksempel, hvis en skal ta et steg, så ser man hvor langt foten kan strekke seg fra kroppen og hvor den lander før man kalkluerer hvordan alle leddene må bevege seg for å nå den ønskede posisjonen.
+
+Her er en søt liten tabell som forklarer litt flere detaljer om forskjellene:
+
+| Aspect         | Forward Kinematics (FK)                  | Inverse Kinematics (IK)                     |
+| -------------- | ---------------------------------------- | ------------------------------------------- |
+| **Direction**  | Joint parameters → End effector position | End effector position → Joint parameters    |
+| **Complexity** | Relatively simple to compute             | Computationally more complex                |
+| **Control**    | Direct control over joint movements      | Indirect control, focusing on end effector  |
+| **Use Case**   | Predetermined motion paths               | Target-driven motion (e.g., reaching tasks) |
+
+Vi skal lage inverse kinematics, ved å skape en lenke som sitter fast, men strekker seg etter musepekeren uten at ankeret flytter på seg.
+
+For å oppnå dette skal vi implementere **FABRIK** algoritmen, **(Forward and Backward Reaching Inverse Kinematics)**, hvor vi regner ut hvordan det fremste leddet i kjeden beveger seg mot musepekeren og hvordan det påvirker alle ledene etter, og så går vi bakover og sjekker at de nye posisjonene ikke overskriver avstanden vi har satt som constrain for hvert ledd hvor vi starter med ankeret.
+
+### Oppgave 3
+
+- I `SimpleChain` filen, implementer `resolveFabrik` algoritmen, og erstatt `resolve` metoden i sketchen din med denne i stedet.
+
+## 4: Constraining angles
+
+Med funksjonene vi har implementert nå, så har vi egentlig alt vi trenger for å lage noe skikkelig fett. Kjedene vi har implementert kan fungere som ryggrader for skapninger og dyr som slanger, fisker og alt annet med enn rygg!
+
+Men, ryggrader er ikke uendelig fleksible, og skal ikke kunne bøye seg i alle mulig retninger. Nå skal vi gjøre kjedene våre litt mindre fleksible!
+
+### Oppgave 4 A
+
+I denne oppgaven skal vi bytte ut `SimpleChain` med `AngledChain`, som er veldig lik den vi har jobbet med, men den har også en oversikt over hvilken `angle` hvert ledd har, og hvor mye `angleConstraint` det skal være mellom hvert ledd. Lavere constraint vinkel = stivere kjede.
+
+I `resolve` er det allerde satt en vinkel for første leddet, som peker mot musepekeren.
+
+- Se på loopen for å oppdatere resten av leddene: finn vinkelen for hvert ledd, og oppdater `angles` ved å constraine leddet til det forrige leddet ved hjelp av `constrainAngle` funskjonen som ligger i `utils.ts`.
+
+- Bytt ut `SimpleChain` med `AngledChain` i sketchen din og set ut!
+
+### Oppgave 4 B
+
+Nå som vi har en ryggrad som ikke kan loope over seg selv 14 millioner ganger, så kan vi faktisk prøve å tegne noe!
+
+I denne oppgaven skal vi prøve å tegne en slange slik som det her:
+
+<video width="320" height="360" controls>
+  <source src="./videos/oppgave4.mov" type="video/mp4">
+</video>
+
+Metoden vi skal bruke for å tegne formen er å lage en kjede hvor vi definerer hvor brede hver enkelt ledd av slangen skal være, og så tegne omrisset av slangen:
+
+For at dette skal være smooth, så tegner vi fra ytterpunktet av hvert ledd til det neste, slik at vi får en form som lett bøyest når slangen slur seg.
+
+Det vi trenger å gjøre, som vi ikke har gjort, er da å regne ut hvor ytterpunktene faktisk er, basert på hvilken vinkelen leddet peker i.
+
+- I `Snake` fila: implementer funksjonene `getPosX`og `getPosY`. I tillegg til argumentene som funksjone faktisk får, så trenger dere også å bruke:
+  - `this.spine.joints` - Arrayen som holder leddene
+  - `this.spine.angles` - Listen over vinklene til hvert ledd
+  - `this.jointSizes` - Listen som sier hvor bred hvert ledd er.
+  - `.cos()` - Funksjon i p5 for å finne cosinus av en vinkel.
+  - `.sin()` - Funksjon i p5 for å finne sinus av en vinkel.
 
 ## 5: With our powers combined
 

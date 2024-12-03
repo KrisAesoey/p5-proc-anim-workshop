@@ -15,18 +15,11 @@ export class Snake {
   }
 
   getPosX(p5: P5, i: number, angleOffset: number, lengthOffset: number = 0) {
-    return (
-      this.spine.joints[i].x +
-      p5.cos(this.spine.angles[i] + angleOffset) *
-        (this.jointSizes[i] / 2 + lengthOffset)
-    );
+    // TODO: implement a method that returns the x position of the i-th joint
   }
+
   getPosY(p5: P5, i: number, angleOffset: number, lengthOffset: number = 0) {
-    return (
-      this.spine.joints[i].y +
-      p5.sin(this.spine.angles[i] + angleOffset) *
-        (this.jointSizes[i] / 2 + lengthOffset)
-    );
+    // TODO: implement a method that returns the y position of the i-th joint
   }
 
   drawLeftSide(p5: P5) {

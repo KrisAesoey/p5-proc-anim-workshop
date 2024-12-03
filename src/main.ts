@@ -18,4 +18,4 @@ let fasitSketch4: P5Closure | undefined = fasit4;
 let fasitSketch5: P5Closure | undefined = fasit5;
 let userSketch: P5Closure | undefined = sketch;
 
-let p5Instance: P5 | undefined = new P5(fasitSketch4, root);
+let p5Instance: P5 | undefined = new P5(fasitSketch3, root);

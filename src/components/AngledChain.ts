@@ -43,6 +43,12 @@ export class AngledChain {
     this.angles[0] = P5.Vector.sub(targetPos, this.joints[0]).heading();
 
     for (let i = 1; i < this.joints.length; i++) {
+      this.joints[i] = constrainDistance(
+        this.joints[i],
+        this.joints[i - 1],
+        this.linkSize
+      );
+
       // TODO: figure out the current angle of the joint
       // and constrain it to the previous joint's angle
 
