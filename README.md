@@ -32,7 +32,9 @@ bun run dev
 
 Vi bruker [P5.js](https://p5js.org/) som verktøy til å visualisere i denne workshoppen. Dette er et JavaScript rammeverk bygget oppå det multispråklige rammeverket [Processing](https://processing.org/) som er utbredt for å lære grafisk programmering.
 
-Dersom du ønsker en oversikt over hvilke metoder som er innebygget så anbefaler jeg å sjekke ut referansene deres, emn jeg kommer også til å lenke til relevante metoder for oppgavene det gjelder.
+Dersom du ønsker en oversikt over hvilke metoder som er innebygget så anbefaler jeg å sjekke ut referansene deres, emn jeg kommer også til å nevne relevante metoder for oppgavene det gjelder.
+
+Tips! Hvis du finner en oppgave litt forvirrende, så er det et sett med løsningsforslag i `Fasiter` mappen. Der finner du _ALL_ koden du trenger for å løse en oppgave i hver fil!
 
 ## 1: Constraints
 
@@ -91,7 +93,7 @@ I denne oppgaven skal vi lage en kjede, hvor flere ledd henger sammen og blir dr
 
 - Finn frem til `SimpleChain` filen i components mappa, og implementer `resolve` metoden, slik at hver lenke på kjeden er er "constrained" på avstand når posisjon blir oppdatert.
 
-- Implement `draw` metoden også, slik at kjeden tegnes på canvaset.
+- Implementer `draw` metoden også, slik at kjeden tegnes på canvaset.
 
 - Initialiser en `SimpleChain` i sketchen din som beveger seg mot musepekeren.
 
@@ -130,7 +132,7 @@ I `resolve` er det allerde satt en vinkel for første leddet, som peker mot muse
 
 - Se på loopen for å oppdatere resten av leddene: finn vinkelen for hvert ledd, og oppdater `angles` ved å constraine leddet til det forrige leddet ved hjelp av `constrainAngle` funskjonen som ligger i `utils.ts`.
 
-- Bytt ut `SimpleChain` med `AngledChain` i sketchen din og set ut!
+- Bytt ut `SimpleChain` med `AngledChain` i sketchen din og sjekk det ut!
 
 ### Oppgave 4 B
 
@@ -142,13 +144,13 @@ I denne oppgaven skal vi prøve å tegne en slange slik som det her:
   <source src="./videos/oppgave4.mov" type="video/mp4">
 </video>
 
-Metoden vi skal bruke for å tegne formen er å lage en kjede hvor vi definerer hvor brede hver enkelt ledd av slangen skal være, og så tegne omrisset av slangen:
+Metoden vi skal bruke for å tegne formen er å lage en kjede hvor vi definerer hvor bred hver enkelt ledd av slangen skal være, og så tegne omrisset av slangen:
 
-For at dette skal være smooth, så tegner vi fra ytterpunktet av hvert ledd til det neste, slik at vi får en form som lett bøyest når slangen slur seg.
+For at dette skal være smooth, så tegner vi fra ytterpunktet av hvert ledd til det neste, slik at vi får en form som lett kan bøyes når slangen snirkler seg.
 
-Det vi trenger å gjøre, som vi ikke har gjort, er da å regne ut hvor ytterpunktene faktisk er, basert på hvilken vinkelen leddet peker i.
+Det vi trenger å gjøre, som vi ikke har gjort, er da å regne ut hvor ytterpunktene faktisk er, basert på hvilken vinkel leddet peker mot.
 
-- I `Snake` fila: implementer funksjonene `getPosX`og `getPosY`. I tillegg til argumentene som funksjone faktisk får, så trenger dere også å bruke:
+- I `Snake` fila: implementer funksjonene `getPosX`og `getPosY`. I tillegg til argumentene til funksjonen, så trenger dere også å bruke:
   - `this.spine.joints` - Arrayen som holder leddene
   - `this.spine.angles` - Listen over vinklene til hvert ledd
   - `this.jointSizes` - Listen som sier hvor bred hvert ledd er.
@@ -157,7 +159,24 @@ Det vi trenger å gjøre, som vi ikke har gjort, er da å regne ut hvor ytterpun
 
 ## 5: With our powers combined
 
+Nå har vi egentlig gått gjennom alt som skal til for å lage alle mulige fantastiske animerte dyr. Det meste er jo egentlig bare en slange med armer og bein, som vi kan implementere med FABRIK algoritmen! Så det skal vi prøve på nå.
+
+I `Lizard` filen finner vi noe som ligner på slangen fra forrige oppgave, bortsett fra at den har en array bestående av 4 armer,
+representert av `Arm` klassen. En `Arm` er nøyaktig det samme som en `AngledChain` fra forrige oppgave, men den tegner formen ulikt basert på hvilken side av kroppen den er på og om den er framme eller bak.
+
+### Oppgave 5
+
+For at armene skal se skikkelig smooth ut så ønsker vi at de bare strekker seg i retningen firfirslen beveger seg når de er helt bak
+i sin "Range of Motion". Akkurat slik som at vi bare flytter bena våre framover når vi går når de er bak oss. Derfor lagrer vi en ønsket posisjon som armen skal strekke seg mot (arrayen `armsDesiredPos`), og når det punktet er langt nok unna det nåværende ønskete punktet så oppdaterer vi det!
+
+- I `Lizard` filens `resolve` metode, oppdater hver arms posisjon ved hjelp av armens `resolveFabrik` funksjon. For å få dette til må du finne ut hvor ankeret til armen er (dette er relativt til leddet på kroppen den henger fra).
+
+- Bonus: hvis du prøve å få litt smoothere bevegelse så kan du teste `lerp()` metoden for å ikke strekke armen så langt den kan gå.
+
+- Instansier `Lizard` klassen i sketchen din!
+
 ## 6: Let the creativity flow
 
-HAhahahah
+Gratulerer du er gjennom oppgavene, nå er det bare å være kreativ og lage de sykeste skapningene og animere dem som du vil!
+
 https://x.com/runevision/status/1857823929575870911

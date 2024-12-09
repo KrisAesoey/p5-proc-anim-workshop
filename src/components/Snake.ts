@@ -16,10 +16,12 @@ export class Snake {
 
   getPosX(p5: P5, i: number, angleOffset: number, lengthOffset: number = 0) {
     // TODO: implement a method that returns the x position of the i-th joint
+    return 0; // replace this
   }
 
   getPosY(p5: P5, i: number, angleOffset: number, lengthOffset: number = 0) {
     // TODO: implement a method that returns the y position of the i-th joint
+    return 0; // replace this
   }
 
   drawLeftSide(p5: P5) {
