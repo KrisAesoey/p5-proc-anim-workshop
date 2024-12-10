@@ -5,7 +5,7 @@ export function constrainDistance(
   anchor: P5.Vector,
   distance: number
 ): P5.Vector {
-  // TODO: set the position of the dot to the anchor to the desired distance
+  // TODO: set the position of the dot to the anchor to be equal to the desired distance
   return pos;
 }
 
@@ -15,7 +15,7 @@ export function constrainMaxDistance(
   maxDistance: number
 ): P5.Vector {
   // TODO: set the position of the dot to the anchor if the distance
-  // between the dot and the anchor is greater than the given distance
+  // between the dot and the anchor is greater than the given maxDistance
   return pos;
 }
 

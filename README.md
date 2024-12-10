@@ -32,7 +32,7 @@ bun run dev
 
 Vi bruker [P5.js](https://p5js.org/) som verktøy til å visualisere i denne workshoppen. Dette er et JavaScript rammeverk bygget oppå det multispråklige rammeverket [Processing](https://processing.org/) som er utbredt for å lære grafisk programmering.
 
-Dersom du ønsker en oversikt over hvilke metoder som er innebygget så anbefaler jeg å sjekke ut referansene deres, emn jeg kommer også til å nevne relevante metoder for oppgavene det gjelder.
+Dersom du ønsker en oversikt over hvilke metoder som er innebygget så anbefaler jeg å sjekke ut referansene deres, men jeg kommer også til å nevne relevante metoder for oppgavene det gjelder.
 
 Tips! Hvis du finner en oppgave litt forvirrende, så er det et sett med løsningsforslag i `Fasiter` mappen. Der finner du _ALL_ koden du trenger for å løse en oppgave i hver fil!
 
@@ -50,6 +50,18 @@ I denne delen skal vi prøve å gjenskape dette:
 hvor vi har en dott, som er "constrained" til å ikke kunne
 være lengre unna musepekeren enn sirkelen som er tegna.
 
+For denne oppgaven kan det være lurt å sjekke ut:
+
+- `add(value: P5.Vector)` - Plusser på en annen vektor og gir deg summen.
+- `sub(value: P5.Vector)` - Trekker fra en annen vektor for å finne differansen.
+- `mag()` - Finner den totale lengden (magnituden) av vektoren i alle retninger.
+- `setMag(len: number)`- Skalerer vektoren til en ny magnitude basert på gitt lengde.
+
+I tillegg er det mange metoder som ikke er statiske fra biblioteket, men bygger på en `P5`instans. Dette gjelder hovedsaklig ting som skal være knyttet til en canvas (med andre ord tegnes):
+
+`.createVector()` - Tegner en ny vector på canvaset.
+`.ellipse(x: number, y: number, w: number, h?: number)` - Tegner en sirkel på canvaset.
+
 ### Oppgave 1 A
 
 - Åpne sketch.ts fila, denne fila vil fungere som vår canvas for resten av workshoppen.
@@ -62,18 +74,6 @@ være lengre unna musepekeren enn sirkelen som er tegna.
 
 - Implementer `constrainMaxDistance` funksjonen.
 - Erstatt oppdateringen av posisjone til dotten med `constrainMaxDistance` funksjonen
-
-For denne oppgaven kan det være lurt å sjekke ut:
-
-- `add(value: P5.Vector)` - Plusser på en annen vektor og gir deg summen.
-- `sub(value: P5.Vector)` - Trekker fra en annen vektor for å finne differansen.
-- `mag()` - Finner den totale lengden (magnituden) av vektoren i alle retninger.
-- `setMag(len: number)`- Skalerer vektoren til en ny magnitude basert på gitt lengde.
-
-I tillegg er det mange metoder som ikke er statiske fra biblioteket, men bygger på en `P5`instans. Dette gjelder hovedsaklig ting som skal være knyttet til en canvas (med andre ord tegnes):
-
-`.createVector()` - Tegner en ny vector på canvaset.
-`.ellipse(x: number, y: number, w: number, h?: number)` - Tegner en sirkel på canvaset.
 
 ## 2: Kinematics
 
@@ -91,7 +91,7 @@ I denne oppgaven skal vi lage en kjede, hvor flere ledd henger sammen og blir dr
   <source src="./videos/oppgave2.mov" type="video/mp4">
 </video>
 
-- Finn frem til `SimpleChain` filen i components mappa, og implementer `resolve` metoden, slik at hver lenke på kjeden er er "constrained" på avstand når posisjon blir oppdatert.
+- Finn frem til `SimpleChain` filen i components mappa, og implementer `resolve` metoden, slik at hver lenke på kjeden er "constrained" på avstand når posisjon blir oppdatert.
 
 - Implementer `draw` metoden også, slik at kjeden tegnes på canvaset.
 
